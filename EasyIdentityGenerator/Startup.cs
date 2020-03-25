@@ -38,7 +38,7 @@ namespace EasyIdentityGenerator
                 hubOptions.EnableDetailedErrors = true;
             }).AddAzureSignalR(options =>
             {
-                options.ConnectionString = Configuration["Azure:SignalR:ConnectionString"];
+                //options.ConnectionString = Configuration["Azure:SignalR:ConnectionString"];
                 options.ServerStickyMode =
                     Microsoft.Azure.SignalR.ServerStickyMode.Required;
             });
