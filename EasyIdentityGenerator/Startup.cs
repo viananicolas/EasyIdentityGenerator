@@ -35,6 +35,7 @@ namespace EasyIdentityGenerator
             services.AddSingleton<IEmailGenerator, EmailGenerator>();
             services.AddSingleton<IPasswordGenerator, PasswordGenerator>();
             services.AddSingleton<IIdentityGenerator, IdentityGenerator>();
+            services.AddSingleton<IHttpService, HttpService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
