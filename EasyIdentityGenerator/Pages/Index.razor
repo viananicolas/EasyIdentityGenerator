@@ -1,0 +1,24 @@
+﻿@page "/"
+@using CurrieTechnologies.Razor.Clipboard
+@using EasyIdentityGenerator.Data.Models
+@inject ClipboardService Clipboard
+
+<h1>Easy Identity Generator</h1>
+
+<AppInfoPrompt @bind-Value="GeneratedUser" Title="You need a fast way to generate an ASP.NET Identity user to access your app in developement?" />
+
+<div class="form-group">
+    <div>
+        <input @bind="GeneratedUser.Password" type="text" class="form-control" placeholder="Password" readonly="readonly" />
+        <button @onclick="(async e => await Clipboard.WriteTextAsync(GeneratedUser.Password))">Copy to Clipboard</button>
+    </div>
+    <div>
+        <input @bind="GeneratedUser.PasswordHash" type="text" class="form-control" placeholder="Password" readonly="readonly" />
+        <button @onclick="(async e => await Clipboard.WriteTextAsync(GeneratedUser.PasswordHash))">Copy to Clipboard</button>
+    </div>
+</div>
+
+@code
+{
+    ApplicationUser GeneratedUser = new ApplicationUser();
+}
