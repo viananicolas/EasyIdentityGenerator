@@ -7,9 +7,7 @@ namespace EasyIdentityGenerator.Data.Services.Implementation
     {
         public ApplicationUser GenerateUser()
         {
-            var applicationUser = new ApplicationUser();
-            applicationUser.Password = "oi";
-            applicationUser.PasswordHash = "fsdf";
+            var applicationUser = new ApplicationUser {Password = "oi", PasswordHash = "fsdf"};
             return applicationUser;
         }
     }
