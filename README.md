@@ -1,3 +1,3 @@
 # EasyIdentityGenerator
 
-![.NET Core](https://github.com/viananicolas/EasyIdentityGenerator/workflows/.NET%20Core/badge.svg)
+![Docker Image CI](https://github.com/viananicolas/EasyIdentityGenerator/workflows/Docker%20Image%20CI/badge.svg?branch=master)
