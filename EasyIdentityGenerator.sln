@@ -5,7 +5,13 @@ VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyIdentityGenerator", "EasyIdentityGenerator\EasyIdentityGenerator.csproj", "{930AB890-53D0-486A-A713-125A923CB54D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyIdentityGenerator.Data", "EasyIdentityGenerator.Data\EasyIdentityGenerator.Data.csproj", "{6C77DF33-CAC7-4346-80F0-F59A83571A5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyIdentityGenerator.Data", "EasyIdentityGenerator.Data\EasyIdentityGenerator.Data.csproj", "{6C77DF33-CAC7-4346-80F0-F59A83571A5C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B5220958-4E19-4169-B255-B7E448349586}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		EasyIdentityGenerator\Dockerfile = EasyIdentityGenerator\Dockerfile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +30,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{930AB890-53D0-486A-A713-125A923CB54D} = {B5220958-4E19-4169-B255-B7E448349586}
+		{6C77DF33-CAC7-4346-80F0-F59A83571A5C} = {B5220958-4E19-4169-B255-B7E448349586}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {37EFACB0-C399-4488-B50C-1F5793724697}
