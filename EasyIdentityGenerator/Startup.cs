@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using EasyIdentityGenerator.Data;
 using EasyIdentityGenerator.Data.Services.Implementation;
 using EasyIdentityGenerator.Data.Services.Interfaces;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace EasyIdentityGenerator
 {
@@ -51,6 +52,11 @@ namespace EasyIdentityGenerator
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
