@@ -32,6 +32,17 @@ namespace EasyIdentityGenerator
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+
+            services.AddSignalR(hubOptions =>
+            {
+                hubOptions.EnableDetailedErrors = true;
+            }).AddAzureSignalR(options =>
+            {
+                options.ConnectionString = Configuration["Azure:SignalR:ConnectionString"];
+                options.ServerStickyMode =
+                    Microsoft.Azure.SignalR.ServerStickyMode.Required;
+            });
+
             services.AddClipboard();
             services.AddSingleton<IEmailGenerator, EmailGenerator>();
             services.AddSingleton<IPasswordGenerator, PasswordGenerator>();
@@ -57,7 +68,7 @@ namespace EasyIdentityGenerator
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
-
+            app.UseWebSockets();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
