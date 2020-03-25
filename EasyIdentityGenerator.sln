@@ -8,10 +8,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyIdentityGenerator.Data", "EasyIdentityGenerator.Data\EasyIdentityGenerator.Data.csproj", "{6C77DF33-CAC7-4346-80F0-F59A83571A5C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B5220958-4E19-4169-B255-B7E448349586}"
-	ProjectSection(SolutionItems) = preProject
-		.dockerignore = .dockerignore
-		EasyIdentityGenerator\Dockerfile = EasyIdentityGenerator\Dockerfile
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
