@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Blazorise;
+using Blazorise.Bootstrap;
+using Blazorise.Icons.FontAwesome;
 using CurrieTechnologies.Razor.Clipboard;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
@@ -35,6 +38,13 @@ namespace EasyIdentityGenerator
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddClipboard();
+            services.AddBlazorise(options =>
+                {
+                    options.ChangeTextOnKeyPress = true;
+                })
+                .AddBootstrapProviders()
+                .AddFontAwesomeIcons();
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
@@ -47,7 +57,6 @@ namespace EasyIdentityGenerator
                     Microsoft.Azure.SignalR.ServerStickyMode.Required;
             });
 
-            services.AddClipboard();
             services.AddScoped<IIdentityGenerator, IdentityGenerator>();
             services.AddHttpClient<IHttpService<RandomUser>, RandomUserHttpService>();
             services.AddDbContext<EasyIdentityDbContext>(opt => opt.UseInMemoryDatabase("EasyIdentityGeneratorDb"));
@@ -86,7 +95,7 @@ namespace EasyIdentityGenerator
             });
 
             app.UseWebSockets();
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -95,7 +104,9 @@ namespace EasyIdentityGenerator
             {
                 MinimumSameSitePolicy = SameSiteMode.None
             });
-
+            app.ApplicationServices
+                .UseBootstrapProviders()
+                .UseFontAwesomeIcons();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapBlazorHub();
