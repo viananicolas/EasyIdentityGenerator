@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Blazorise;
@@ -22,16 +23,31 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace EasyIdentityGenerator
 {
     public class Startup
     {
         private readonly IHostEnvironment _env;
-        public Startup(IConfiguration configuration, IHostEnvironment env)
+        public Startup(IHostEnvironment env)
         {
             _env = env;
-            Configuration = configuration;
+            //Configuration = configuration;
+
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+
+            if (env.IsDevelopment())
+            {
+                builder.AddUserSecrets<Startup>();
+            }
+
+            builder.AddEnvironmentVariables();
+            Configuration = builder.Build();
+
         }
 
         public IConfiguration Configuration { get; }
@@ -55,11 +71,6 @@ namespace EasyIdentityGenerator
                 hubOptions.EnableDetailedErrors = true;
             }).AddAzureSignalR(options =>
             {
-                if (!_env.IsDevelopment())
-                {
-                    options.ConnectionString = "Endpoint=https://easyidentitygenerator.service.signalr.net;AccessKey=gp6LKtyGBKtqSj6pC+tNIeYLZWl0vmLaTuPWYbam1GQ=;Version=1.0;";
-                }
-
                 options.ServerStickyMode =
                     Microsoft.Azure.SignalR.ServerStickyMode.Required;
             });
@@ -83,7 +94,7 @@ namespace EasyIdentityGenerator
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
