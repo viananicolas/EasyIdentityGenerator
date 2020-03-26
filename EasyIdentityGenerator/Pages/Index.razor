@@ -3,38 +3,85 @@
 @using EasyIdentityGenerator.Data.Models
 @inject ClipboardService Clipboard
 
-<h1>Easy Identity Generator</h1>
-
-<AppInfoPrompt @bind-Value="GeneratedUser" Title="You need a fast way to generate an ASP.NET Identity user to access your app during developement? Then" />
-
-<div class="form-group">
-    <div>
-        <input @bind="GeneratedUser.Password" type="text" class="form-control" placeholder="Password" readonly="readonly" />
-        <button @onclick="(async e => await Clipboard.WriteTextAsync(GeneratedUser.Password))">Copy to Clipboard</button>
-    </div>
-    <div>
-        <input @bind="GeneratedUser.PasswordHash" type="text" class="form-control" placeholder="Password Hash" readonly="readonly" />
-        <button @onclick="(async e => await Clipboard.WriteTextAsync(GeneratedUser.PasswordHash))">Copy to Clipboard</button>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Easy Identity Generator</h1>
     </div>
 </div>
 
-<Tabs SelectedTabChanged="@OnSelectedTabChanged">
-    <Tab Name="1" IsActive="@(generatedUserSelectedTab=="1")">SQL</Tab>
-    <Tab Name="2" IsActive="@(generatedUserSelectedTab=="2")">JSON</Tab>
-</Tabs>
-<TabsContent @ref="generatedUserTabContent">
-    <TabPanel Name="1" IsActive="@(generatedUserSelectedTab == "1")">
-        First tab content
-    </TabPanel>
-    <TabPanel Name="2" IsActive="@(generatedUserSelectedTab == "2")">
-        Second tab content
-    </TabPanel>
-</TabsContent>
+<AppInfoPrompt @bind-Value="GeneratedUser" Title="You need a fast way to generate an ASP.NET Identity user to access your app during developement? Then" />
+
+<form>
+    <div class="form-group">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
+            </div>
+            <input @bind="GeneratedUser.Email" type="text" class="form-control" placeholder="Email" readonly="readonly" />
+            <div class="input-group-append">
+                <button @onclick="(async e => await Clipboard.WriteTextAsync(GeneratedUser.Email))" type="button" class="btn btn-secondary">Copy</button>
+            </div>
+        </div>
+    </div>    <div class="form-group">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Password</span>
+            </div>
+            <input @bind="GeneratedUser.Password" type="text" class="form-control" placeholder="Password" readonly="readonly" />
+            <div class="input-group-append">
+                <button @onclick="(async e => await Clipboard.WriteTextAsync(GeneratedUser.Password))" type="button" class="btn btn-secondary">Copy</button>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Core Hash</span>
+            </div>
+            <input @bind="GeneratedUser.PasswordHash" type="text" class="form-control" placeholder="Password" readonly="readonly" />
+            <div class="input-group-append">
+                <button @onclick="(async e => await Clipboard.WriteTextAsync(GeneratedUser.PasswordHash))" type="button" class="btn btn-secondary">Copy</button>
+            </div>
+
+        </div>
+    </div>
+    <div class="form-group">
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">MVC Hash</span>
+            </div>
+            <input @bind="GeneratedUser.PasswordHashMvc" type="text" class="form-control" placeholder="Password" readonly="readonly" />
+            <div class="input-group-append">
+                <button @onclick="(async e => await Clipboard.WriteTextAsync(GeneratedUser.PasswordHashMvc))" type="button" class="btn btn-secondary">Copy</button>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <Tabs SelectedTabChanged="@OnSelectedTabChanged">
+            <Tab Name="2" IsActive="@(generatedUserSelectedTab=="2")">JSON</Tab>
+            <Tab Name="1" IsActive="@(generatedUserSelectedTab == "1")">SQL</Tab>
+        </Tabs>
+        <TabsContent @ref="generatedUserTabContent">
+            <TabPanel Name="1" IsActive="@(generatedUserSelectedTab == "1")">
+                Under construction
+            </TabPanel>
+            <TabPanel Name="2" IsActive="@(generatedUserSelectedTab == "2")">
+                <textarea id="jsonTextArea" cols="25" rows="3"  class="form-control">
+            @GeneratedUser.Json 
+        </textarea>
+            </TabPanel>
+        </TabsContent>
+    </div>
+</form>
+
+
 @code
 {
     ApplicationUser GeneratedUser = new ApplicationUser();
     TabsContent generatedUserTabContent;
-    string generatedUserSelectedTab = "0";
+    string generatedUserSelectedTab = "2";
 
     private void OnSelectedTabChanged(string name)
     {

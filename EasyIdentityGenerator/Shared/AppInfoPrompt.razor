@@ -2,17 +2,19 @@
 @using EasyIdentityGenerator.Data.Services.Interfaces
 @inject IIdentityGenerator IdentityGenerator
 
-<div class="alert alert-secondary mt-4" role="alert">
-    <span class="oi oi-pencil mr-2" aria-hidden="true"></span>
+<div class="alert alert-light mt-2" role="alert">
+    <span class="oi oi-person mr-2" aria-hidden="true"></span>
     <strong>@Title</strong>
 
     <span class="text-nowrap">
-        <button class="btn btn-info" @onclick="@GenerateIdentityUser">Click here</button>
+        <button class="btn btn-info" @onclick="@GenerateIdentityUser" disabled="@_isDisabled">@_generateUserBtn</button>
     </span>
 </div>
 
+
+
 @code {
-    // Demonstrates how a parent component can supply parameters
+
     [Parameter]
     public string Title { get; set; }
 
@@ -24,7 +26,14 @@
 
     private async Task GenerateIdentityUser()
     {
+        _isDisabled = true;
+        _generateUserBtn = "Generating...";
         Value = await IdentityGenerator.GenerateUser();
         await ValueChanged.InvokeAsync(Value);
+        _isDisabled = false;
+        _generateUserBtn = "Click Here";
     }
+
+    bool _isDisabled = false;
+    string _generateUserBtn = "Click Here";
 }
