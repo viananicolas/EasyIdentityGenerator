@@ -24,6 +24,6 @@ jobs:
         login-server: ${{ secrets.DOCKER_CONTAINER_REGISTRY }}
     - name: Build e Push no Azure Container Registry
       run: |
-        docker build . --file EasyIdentityGenerator/Dockerfile --tag ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/useridentitygenerator:latest
-        docker tag ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/useridentitygenerator:latest ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/useridentitygenerator:$(date +%s)
-        docker push ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/useridentitygenerator
+        docker build . --file EasyIdentityGenerator/Dockerfile --tag ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/easyidentitygenerator:latest
+        docker tag ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/easyidentitygenerator:latest ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/easyidentitygenerator:$(date +%s)
+        docker push ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/easyidentitygenerator

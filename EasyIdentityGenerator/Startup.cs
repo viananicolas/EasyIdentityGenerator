@@ -27,8 +27,10 @@ namespace EasyIdentityGenerator
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IHostEnvironment _env;
+        public Startup(IConfiguration configuration, IHostEnvironment env)
         {
+            _env = env;
             Configuration = configuration;
         }
 
@@ -53,6 +55,11 @@ namespace EasyIdentityGenerator
                 hubOptions.EnableDetailedErrors = true;
             }).AddAzureSignalR(options =>
             {
+                if (!_env.IsDevelopment())
+                {
+                    options.ConnectionString = Environment.GetEnvironmentVariable("Azure__SignalR__ConnectionString");
+                }
+
                 options.ServerStickyMode =
                     Microsoft.Azure.SignalR.ServerStickyMode.Required;
             });
