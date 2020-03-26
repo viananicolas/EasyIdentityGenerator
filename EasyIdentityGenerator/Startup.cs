@@ -57,7 +57,7 @@ namespace EasyIdentityGenerator
             {
                 if (!_env.IsDevelopment())
                 {
-                    options.ConnectionString = Environment.GetEnvironmentVariable("Azure__SignalR__ConnectionString");
+                    options.ConnectionString = "Endpoint=https://easyidentitygenerator.service.signalr.net;AccessKey=gp6LKtyGBKtqSj6pC+tNIeYLZWl0vmLaTuPWYbam1GQ=;Version=1.0;";
                 }
 
                 options.ServerStickyMode =
@@ -102,7 +102,7 @@ namespace EasyIdentityGenerator
             });
 
             app.UseWebSockets();
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
