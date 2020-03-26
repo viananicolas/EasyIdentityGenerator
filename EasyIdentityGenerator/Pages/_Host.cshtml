@@ -33,5 +33,18 @@
 
     <script src="_framework/blazor.server.js"></script>
     <script src="_content/CurrieTechnologies.Razor.Clipboard/clipboard.min.js"></script>
+    <script>
+        $(function () {
+            console.log("ready!");
+            $('#myList a').on('click',
+                function (e) {
+                    e.preventDefault();
+                    $(this).tab('show');
+                });
+
+        });
+        function JSMethod() {
+        }
+    </script>
 </body>
 </html>

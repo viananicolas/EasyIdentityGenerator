@@ -1,9 +1,10 @@
 ﻿using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace EasyIdentityGenerator.Data.Services.Interfaces
 {
-    public interface IHttpService
+    public interface IHttpService<T> where T : class
     {
-        HttpResponseMessage ResponseMessage(string uri);
+        Task<T> Get();
     }
 }

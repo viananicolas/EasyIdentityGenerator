@@ -11,9 +11,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using EasyIdentityGenerator.Data;
+using EasyIdentityGenerator.Data.Context;
+using EasyIdentityGenerator.Data.Models;
 using EasyIdentityGenerator.Data.Services.Implementation;
 using EasyIdentityGenerator.Data.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace EasyIdentityGenerator
 {
@@ -38,16 +43,27 @@ namespace EasyIdentityGenerator
                 hubOptions.EnableDetailedErrors = true;
             }).AddAzureSignalR(options =>
             {
-                //options.ConnectionString = Configuration["Azure:SignalR:ConnectionString"];
                 options.ServerStickyMode =
                     Microsoft.Azure.SignalR.ServerStickyMode.Required;
             });
 
             services.AddClipboard();
-            services.AddSingleton<IEmailGenerator, EmailGenerator>();
-            services.AddSingleton<IPasswordGenerator, PasswordGenerator>();
-            services.AddSingleton<IIdentityGenerator, IdentityGenerator>();
-            services.AddSingleton<IHttpService, HttpService>();
+            services.AddScoped<IIdentityGenerator, IdentityGenerator>();
+            services.AddHttpClient<IHttpService<RandomUser>, RandomUserHttpService>();
+            services.AddDbContext<EasyIdentityDbContext>(opt => opt.UseInMemoryDatabase("EasyIdentityGeneratorDb"));
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<EasyIdentityDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 1;
+                options.Password.RequiredUniqueChars = 0;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,11 +84,17 @@ namespace EasyIdentityGenerator
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
+
             app.UseWebSockets();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseCookiePolicy(new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy = SameSiteMode.None
+            });
 
             app.UseEndpoints(endpoints =>
             {

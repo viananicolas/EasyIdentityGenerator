@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyIdentityGenerator.Data"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B5220958-4E19-4169-B255-B7E448349586}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyIdentityGenerator.DataTests", "EasyIdentityGenerator.DataTests\EasyIdentityGenerator.DataTests.csproj", "{1CE2BDDD-B238-4725-8167-D5C2A5B2EAC0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{6C77DF33-CAC7-4346-80F0-F59A83571A5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C77DF33-CAC7-4346-80F0-F59A83571A5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C77DF33-CAC7-4346-80F0-F59A83571A5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CE2BDDD-B238-4725-8167-D5C2A5B2EAC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CE2BDDD-B238-4725-8167-D5C2A5B2EAC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CE2BDDD-B238-4725-8167-D5C2A5B2EAC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CE2BDDD-B238-4725-8167-D5C2A5B2EAC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,6 +36,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{930AB890-53D0-486A-A713-125A923CB54D} = {B5220958-4E19-4169-B255-B7E448349586}
 		{6C77DF33-CAC7-4346-80F0-F59A83571A5C} = {B5220958-4E19-4169-B255-B7E448349586}
+		{1CE2BDDD-B238-4725-8167-D5C2A5B2EAC0} = {B5220958-4E19-4169-B255-B7E448349586}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {37EFACB0-C399-4488-B50C-1F5793724697}

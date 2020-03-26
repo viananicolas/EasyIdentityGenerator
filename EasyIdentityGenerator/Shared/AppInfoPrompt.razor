@@ -24,7 +24,7 @@
 
     private async Task GenerateIdentityUser()
     {
-        Value = IdentityGenerator.GenerateUser();
+        Value = await IdentityGenerator.GenerateUser();
         await ValueChanged.InvokeAsync(Value);
     }
 }

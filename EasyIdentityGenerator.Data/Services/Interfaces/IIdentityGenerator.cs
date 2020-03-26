@@ -1,9 +1,10 @@
-﻿using EasyIdentityGenerator.Data.Models;
+﻿using System.Threading.Tasks;
+using EasyIdentityGenerator.Data.Models;
 
 namespace EasyIdentityGenerator.Data.Services.Interfaces
 {
     public interface IIdentityGenerator
     {
-        ApplicationUser GenerateUser();
+        Task<ApplicationUser> GenerateUser();
     }
 }
