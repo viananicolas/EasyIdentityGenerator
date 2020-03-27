@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Blazorise;
 using Blazorise.Bootstrap;
@@ -24,6 +25,10 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Polly;
+using Polly.Extensions.Http;
+using Polly.Retry;
+using Polly.Timeout;
 
 namespace EasyIdentityGenerator
 {
@@ -78,8 +83,8 @@ namespace EasyIdentityGenerator
             services.AddScoped<IIdentityGenerator, IdentityGenerator>();
             services.AddScoped<IPasswordHasherMvc, PasswordHasherMvc>();
             services.AddScoped<IFileReader, FileReader>();
-            services.AddHttpClient<IHttpService<RandomUser>, RandomUserHttpService>();
-            services.AddHttpClient<IHttpService<RandomPassword>, RandomPasswordHttpService>();
+            services.AddHttpClient<IHttpService<RandomUser>, RandomUserHttpService>().AddPolicyHandler(RetryPolicy());
+            services.AddHttpClient<IHttpService<RandomPassword>, RandomPasswordHttpService>().AddPolicyHandler(RetryPolicy());
             services.AddDbContext<EasyIdentityDbContext>(opt => opt.UseInMemoryDatabase("EasyIdentityGeneratorDb"));
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<EasyIdentityDbContext>()
@@ -94,6 +99,15 @@ namespace EasyIdentityGenerator
                 options.Password.RequiredLength = 1;
                 options.Password.RequiredUniqueChars = 0;
             });
+        }
+
+        private static AsyncRetryPolicy<HttpResponseMessage> RetryPolicy()
+        {
+            return HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .Or<TimeoutRejectedException>()
+                .Or<Newtonsoft.Json.JsonReaderException>()
+                .RetryAsync(3);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
