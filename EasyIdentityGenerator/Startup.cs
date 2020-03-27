@@ -77,6 +77,7 @@ namespace EasyIdentityGenerator
 
             services.AddScoped<IIdentityGenerator, IdentityGenerator>();
             services.AddScoped<IPasswordHasherMvc, PasswordHasherMvc>();
+            services.AddScoped<IFileReader, FileReader>();
             services.AddHttpClient<IHttpService<RandomUser>, RandomUserHttpService>();
             services.AddHttpClient<IHttpService<RandomPassword>, RandomPasswordHttpService>();
             services.AddDbContext<EasyIdentityDbContext>(opt => opt.UseInMemoryDatabase("EasyIdentityGeneratorDb"));

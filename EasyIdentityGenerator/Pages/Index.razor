@@ -60,16 +60,24 @@
     </div>
     <div class="form-group">
         <Tabs SelectedTabChanged="@OnSelectedTabChanged">
-            <Tab Name="2" IsActive="@(generatedUserSelectedTab=="2")">JSON</Tab>
-            <Tab Name="1" IsActive="@(generatedUserSelectedTab == "1")">SQL</Tab>
+            <Tab Name="1" IsActive="@(generatedUserSelectedTab=="1")">JSON</Tab>
+            <Tab Name="2" IsActive="@(generatedUserSelectedTab == "2")">ASP.NET Core SQL</Tab>
+            <Tab Name="3" IsActive="@(generatedUserSelectedTab == "3")">ASP.NET MVC SQL</Tab>
         </Tabs>
         <TabsContent @ref="generatedUserTabContent">
             <TabPanel Name="1" IsActive="@(generatedUserSelectedTab == "1")">
-                Under construction
+                <textarea class="generatedCode form-control" readonly="readonly">
+            @GeneratedUser.Json 
+        </textarea>
             </TabPanel>
             <TabPanel Name="2" IsActive="@(generatedUserSelectedTab == "2")">
-                <textarea id="jsonTextArea" cols="25" rows="3"  class="form-control">
-            @GeneratedUser.Json 
+                <textarea  class="generatedCode form-control" readonly="readonly">
+            @GeneratedUser.CoreSql 
+        </textarea>
+            </TabPanel>            
+            <TabPanel Name="3" IsActive="@(generatedUserSelectedTab == "3")">
+                <textarea  class="generatedCode form-control" readonly="readonly">
+            @GeneratedUser.MvcSql 
         </textarea>
             </TabPanel>
         </TabsContent>
@@ -81,7 +89,7 @@
 {
     ApplicationUser GeneratedUser = new ApplicationUser();
     TabsContent generatedUserTabContent;
-    string generatedUserSelectedTab = "2";
+    string generatedUserSelectedTab = "1";
 
     private void OnSelectedTabChanged(string name)
     {
