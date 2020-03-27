@@ -1,26 +1,32 @@
 INSERT INTO [dbo].[AspNetUsers]
            ([Id]
+           ,[AccessFailedCount]
+           ,[ConcurrencyStamp]
            ,[Email]
            ,[EmailConfirmed]
+           ,[LockoutEnabled]
+           ,[LockoutEnd]
+           ,[NormalizedEmail]
+           ,[NormalizedUserName]
            ,[PasswordHash]
-           ,[SecurityStamp]
            ,[PhoneNumber]
            ,[PhoneNumberConfirmed]
+           ,[SecurityStamp]
            ,[TwoFactorEnabled]
-           ,[LockoutEndDateUtc]
-           ,[LockoutEnabled]
-           ,[AccessFailedCount]
            ,[UserName])
      VALUES
            (PlaceholderId
+           ,PlaceholderAccessFailedCount
+           ,PlaceholderConcurrencyStamp
            ,PlaceholderEmail
            ,PlaceholderEmailConfirmed
+           ,PlaceholderLockoutEnabled
+           ,PlaceholderLockoutEnd
+           ,PlaceholderNormalizedEmail
+           ,PlaceholderNormalizedUserName
            ,PlaceholderPasswordHash
-           ,PlaceholderSecurityStamp
            ,PlaceholderPhoneNumber
            ,PlaceholderPhoneNumberConfirmed
+           ,PlaceholderSecurityStamp
            ,PlaceholderTwoFactorEnabled
-           ,PlaceholderLockoutEndDateUtc
-           ,PlaceholderLockoutEnabled
-           ,PlaceholderAccessFailedCount
            ,PlaceholderUserName)
