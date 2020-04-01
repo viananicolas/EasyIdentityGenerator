@@ -1,21 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using CurrieTechnologies.Razor.Clipboard;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using EasyIdentityGenerator.Data;
 using EasyIdentityGenerator.Data.Context;
 using EasyIdentityGenerator.Data.Models;
 using EasyIdentityGenerator.Data.Services.Implementation;
@@ -52,7 +44,6 @@ namespace EasyIdentityGenerator
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
-
         }
 
         public IConfiguration Configuration { get; }
@@ -83,8 +74,11 @@ namespace EasyIdentityGenerator
             services.AddScoped<IIdentityGenerator, IdentityGenerator>();
             services.AddScoped<IPasswordHasherMvc, PasswordHasherMvc>();
             services.AddScoped<IFileReader, FileReader>();
-            services.AddHttpClient<IHttpService<RandomUser>, RandomUserHttpService>().AddPolicyHandler(RetryPolicy());
-            services.AddHttpClient<IHttpService<RandomPassword>, RandomPasswordHttpService>().AddPolicyHandler(RetryPolicy());
+            services.AddScoped<IDataGenerator, DataGenerator>();
+            services.AddHttpClient<IHttpService<RandomUser>, RandomUserHttpService>()
+                .AddPolicyHandler(HttpRetryPolicy());
+            services.AddHttpClient<IHttpService<RandomPassword>, RandomPasswordHttpService>()
+                .AddPolicyHandler(HttpRetryPolicy());
             services.AddDbContext<EasyIdentityDbContext>(opt => opt.UseInMemoryDatabase("EasyIdentityGeneratorDb"));
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<EasyIdentityDbContext>()
@@ -101,7 +95,7 @@ namespace EasyIdentityGenerator
             });
         }
 
-        private static AsyncRetryPolicy<HttpResponseMessage> RetryPolicy()
+        private static AsyncRetryPolicy<HttpResponseMessage> HttpRetryPolicy()
         {
             return HttpPolicyExtensions
                 .HandleTransientHttpError()
@@ -139,6 +133,7 @@ namespace EasyIdentityGenerator
             {
                 MinimumSameSitePolicy = SameSiteMode.None
             });
+
             app.ApplicationServices
                 .UseBootstrapProviders()
                 .UseFontAwesomeIcons();

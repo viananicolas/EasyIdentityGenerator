@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EasyIdentityGenerator.Data.Models
+﻿namespace EasyIdentityGenerator.Data.Models
 {
     public class Login
     {

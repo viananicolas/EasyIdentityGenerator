@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using EasyIdentityGenerator.Data.Services.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 
