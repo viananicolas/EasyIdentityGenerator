@@ -59,28 +59,30 @@
         </div>
     </div>
     <div class="form-group">
-        <Tabs SelectedTabChanged="@OnSelectedTabChanged">
-            <Tab Name="1" IsActive="@(generatedUserSelectedTab=="1")">JSON</Tab>
-            <Tab Name="2" IsActive="@(generatedUserSelectedTab == "2")">ASP.NET Core SQL</Tab>
-            <Tab Name="3" IsActive="@(generatedUserSelectedTab == "3")">ASP.NET MVC SQL</Tab>
+        <Tabs SelectedTab="@generatedUserSelectedTab" SelectedTabChanged="@OnSelectedTabChanged">
+            <Items>
+                <Tab Name="1">JSON</Tab>
+                <Tab Name="2">ASP.NET Core SQL</Tab>
+                <Tab Name="3">ASP.NET MVC SQL</Tab>
+            </Items>
+            <Content>
+                <TabPanel Name="1">
+                    <textarea class="generatedCode form-control" readonly="readonly">
+                        @GeneratedUser.Json 
+                    </textarea>
+                </TabPanel>
+                <TabPanel Name="2">
+                    <textarea class="generatedCode form-control" readonly="readonly">
+                        @GeneratedUser.CoreSql 
+                    </textarea>
+                </TabPanel>
+                <TabPanel Name="3">
+                    <textarea class="generatedCode form-control" readonly="readonly">
+                        @GeneratedUser.MvcSql 
+                    </textarea>
+                </TabPanel>
+            </Content>
         </Tabs>
-        <TabsContent @ref="generatedUserTabContent">
-            <TabPanel Name="1" IsActive="@(generatedUserSelectedTab == "1")">
-                <textarea class="generatedCode form-control" readonly="readonly">
-            @GeneratedUser.Json 
-        </textarea>
-            </TabPanel>
-            <TabPanel Name="2" IsActive="@(generatedUserSelectedTab == "2")">
-                <textarea  class="generatedCode form-control" readonly="readonly">
-            @GeneratedUser.CoreSql 
-        </textarea>
-            </TabPanel>            
-            <TabPanel Name="3" IsActive="@(generatedUserSelectedTab == "3")">
-                <textarea  class="generatedCode form-control" readonly="readonly">
-            @GeneratedUser.MvcSql 
-        </textarea>
-            </TabPanel>
-        </TabsContent>
     </div>
 </form>
 
@@ -91,6 +93,7 @@
     TabsContent generatedUserTabContent;
     string generatedUserSelectedTab = "1";
 
+    string selectedTab = "profile";
     private void OnSelectedTabChanged(string name)
     {
         generatedUserSelectedTab = name;
